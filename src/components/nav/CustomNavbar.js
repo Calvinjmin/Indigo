@@ -1,4 +1,6 @@
+import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import React from "react";
@@ -40,9 +42,22 @@ function CustomNavbar() {
     <Navbar bg="light" expand="lg">
       <Container>
         <Navbar.Brand href="#home">Indigo</Navbar.Brand>
-        <Nav className="justify-content-center">Feed</Nav>
-        <Nav className="justify-content-center">People</Nav>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="">Feed</Nav.Link>
+            <Nav.Link href="">Social</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
         <Nav className="justify-content-end">
+          <Form className="d-flex">
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+            />
+            <Button variant="outline-success">Search</Button>
+          </Form>
           {!token ? (
             <Nav.Link
               href={`${AUTH_ENDPOINT}?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}
