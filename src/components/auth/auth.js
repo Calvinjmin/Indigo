@@ -1,13 +1,16 @@
 import qs from "qs";
 import axios from "axios";
-import { get } from "jquery";
 
-const auth_token = Buffer.from(
+import Spotify from "spotify-web-api-js";
+
+const spotifyApi = new Spotify();
+
+export const auth_token = Buffer.from(
   `${process.env.REACT_APP_CLIENT_ID}:${process.env.REACT_APP_CLIENT_SECRET}`,
   "utf-8"
 ).toString("base64");
 
-export const getAuth = async () => {
+export const get_access_token = async () => {
   try {
     //make post request to SPOTIFY API for access token, sending relavent info
     const token_url = "https://accounts.spotify.com/api/token";
@@ -28,4 +31,18 @@ export const getAuth = async () => {
   }
 };
 
-export default getAuth;
+export const test = async () => {
+  const access_token = await get_access_token();
+  spotifyApi.setAccessToken(access_token);
+
+  console.log(spotifyApi);
+  // get an artists
+  spotifyApi.getArtist("2hazSY4Ef3aB9ATXW7F5w3").then(
+    function (data) {
+      console.log("Artist information", data);
+    },
+    function (err) {
+      console.error(err);
+    }
+  );
+};
